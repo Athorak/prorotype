@@ -1,0 +1,94 @@
+<mvc:View
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:macros="sap.fe.macros"
+	xmlns:l="sap.ui.layout"
+	xmlns:html="http://www.w3.org/1999/xhtml" controllerName="prorotype.ext.view.ConnectionOverview"
+	xmlns:macrosTable="sap.fe.macros.table">
+	<macros:Page id="ConnectionOverviewPage" title="ConnectionPage" description="Connection Overview">
+		<l:ResponsiveSplitter id="responsiveSplitter">
+			<l:PaneContainer id="defaultPaneContainer">
+				<l:SplitPane id="leftPane" requiredParentWidth="800" demandPane="true">
+					<l:layoutData>
+						<l:SplitterLayoutData size="70%" id="leftPaneLayoutData"/>
+					</l:layoutData>
+					<l:VerticalLayout width="100%" id="verticalLayout">
+						<f:Card class="sapUiMediumMarginBottom" id="connectionHeaderCard">
+							<f:header>
+								<card:Header title="Connection Details" id="connectionHeader" xmlns:card="sap.f.cards"/>
+							</f:header>
+							<f:content>
+								<VBox class="sapUiSmallMargin" id="connectionHeaderVBox">
+									<HBox justifyContent="SpaceBetween" id="airportsHBox">
+										<VBox class="sapUiSmallMarginEnd" id="departureVBox">
+											<Label text="Departure Airport" design="Bold" id="departureLabel"/>
+											<Text text="{DepartureAirport}" id="departureAirportCode" class="sapUiTinyMarginTop"/>
+											<Text text="{DepartureAirportName}" id="departureAirportName"/>
+											<Text text="Departure Time: {DepartureTime}" id="departureTime" class="sapUiTinyMarginTop"/>
+										</VBox>
+										<core:Icon src="sap-icon://flight" size="2rem" color="Default" id="flightIcon" class="sapUiMediumMarginTop"/>
+										<VBox class="sapUiSmallMarginBegin" id="destinationVBox">
+											<Label text="Destination Airport" design="Bold" id="destinationLabel"/>
+											<Text text="{DestinationAirport}" id="destinationAirportCode" class="sapUiTinyMarginTop"/>
+											<Text text="{DestinationAirportName}" id="destinationAirportName"/>
+											<Text text="Arrival Time: {ArrivalTime}" id="arrivalTime" class="sapUiTinyMarginTop"/>
+										</VBox>
+									</HBox>
+								</VBox>
+							</f:content>
+						</f:Card>
+						<l:Grid containerQuery="true" id="grid">
+							<f:Card class="sapUiTinyMargin" id="flightCard">
+								<f:content>
+									<VBox width="100%" id="flightVBox">
+										<macros:Table id="FlightTable" metaPath="_Flight/@com.sap.vocabularies.UI.v1.LineItem#tableMacro3" header="Flights">
+											<macros:columns>
+												<macrosTable:Column id="AirlineToggleButton" header="AirlineToggle" importance="High" width="5rem" anchor="DataField::AirlineID" placement="After" key="airlinetoggle">
+													<core:Fragment fragmentName="prorotype.ext.fragment.AirlineToggle" type="XML"/>
+												</macrosTable:Column>
+											</macros:columns>
+										</macros:Table>
+									</VBox>
+								</f:content>
+								<f:layoutData>
+									<l:GridData span="XL12 L12 M12 S12" id="flightGridData"/>
+								</f:layoutData>
+							</f:Card>
+							<f:Card class="sapUiTinyMargin" id="airlineCard">
+								<f:content>
+									<VBox width="100%" id="airlineVBox">
+										<macros:Table id="AirlineTable" metaPath="/Airline/@com.sap.vocabularies.UI.v1.LineItem#tableMacro1" header="Airlines"/>
+									</VBox>
+								</f:content>
+								<f:layoutData>
+									<l:GridData span="XL12 L12 M12 S12" id="airlineGridData"/>
+								</f:layoutData>
+							</f:Card>
+						</l:Grid>
+						<OverflowToolbar id="bottomToolbar" class="sapUiMediumMarginTop">
+							<ToolbarSpacer id="toolbarSpacer"/>
+							<Button id="saveButton" text="Save" type="Emphasized" icon="sap-icon://save" press=".onSave"/>
+							<Button id="editButton" text="Edit" type="Transparent" icon="sap-icon://edit" press=".onEdit"/>
+							<Button id="deleteButton" text="Delete" type="Reject" icon="sap-icon://delete" press=".onDelete"/>
+							<Button id="approveButton" text="Approve" type="Accept" icon="sap-icon://accept" press=".onApprove"/>
+							<Button id="cancelButton" text="Cancel" type="Default" icon="sap-icon://decline" press=".onCancel"/>
+						</OverflowToolbar>
+					</l:VerticalLayout>
+				</l:SplitPane>
+				<l:SplitPane id="rightPane" requiredParentWidth="400">
+					<l:layoutData>
+						<l:SplitterLayoutData size="30%" id="rightPaneLayoutData"/>
+					</l:layoutData>
+					<VBox width="100%" height="100%" id="documentVBox" class="sapUiNoContentPadding">
+						<!-- Alternative: PDFViewer control (may have CORS issues with external URLs)
+                        <PDFViewer id="pdfViewer" source="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" height="100%" width="100%" title="Sample Document"/>
+                        -->
+						<html:iframe id="pdfFrame" src="https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf" width="100%" style="border:none; min-height:100vh; height:100%;"/>
+					</VBox>
+				</l:SplitPane>
+			</l:PaneContainer>
+		</l:ResponsiveSplitter>
+	</macros:Page>
+</mvc:View>
